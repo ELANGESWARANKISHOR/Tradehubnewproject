@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Sparkle } from 'lucide-react';
 import "./LoginPage.css";
 
-// This component handles the login page functionality and UI.
 const LoginPage = () => {
   const [role, setRole] = useState("buyer");
   const [email, setEmail] = useState("");
@@ -15,13 +14,12 @@ const LoginPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // In a real application, you would send this data to a server for authentication.
     console.log({ role, email, password });
   };
 
   return (
     <div className="login-container">
-      {/* Header */}
+      
       <header className="header-login">
         <div className="header-logo">
           <Link to="/" className="flex items-center gap-2 text-current">
@@ -31,12 +29,12 @@ const LoginPage = () => {
         </div>
       </header>
 
-      {/* Main Content */}
+      
       <main className="main-content-login">
         <div className="login-box">
           <h2 className="login-title">Log in to Trade Hub</h2>
 
-          {/* Role Selection */}
+          
           <div className="role-selection">
             <label
               className={`role-label ${role === "buyer" ? "selected" : ""}`}
@@ -68,7 +66,7 @@ const LoginPage = () => {
             </label>
           </div>
 
-          {/* Login Form */}
+          
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label" htmlFor="email">
