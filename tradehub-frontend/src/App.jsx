@@ -1,9 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './pages/LandingPage'; // Corrected import path
+import LandingPage from './pages/LandingPage'; 
 
-// The main App component that sets up the router
-// and defines the routes for the application.
 const App = () => {
   return (
     <Router>
