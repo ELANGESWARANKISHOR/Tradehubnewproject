@@ -1,0 +1,304 @@
+/* Global styles */
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background-color: #f9fafb; /* gray-50 */
+}
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Header */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+.nav-links {
+  display: none;
+  gap: 1.5rem;
+}
+.nav-links a {
+  color: #4b5563;
+  transition: color 200ms;
+}
+.nav-links a:hover {
+  color: #2563eb;
+}
+.auth-buttons {
+  display: none;
+  gap: 0.75rem;
+}
+.auth-buttons a {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 200ms;
+}
+.login-btn {
+  color: #2563eb;
+  border: 1px solid #2563eb;
+}
+.login-btn:hover {
+  background-color: #eff6ff; /* blue-50 */
+}
+.signup-btn {
+  background-color: #16a34a; /* green-600 */
+  color: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.signup-btn:hover {
+  background-color: #15803d; /* green-700 */
+}
+
+/* Hero Section */
+.hero-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  background-image: url(https://placehold.co/1200x800/d1d5db/334155?text=Professional+Business+People);
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(17, 24, 39, 0.5);
+}
+.hero-content {
+  position: relative;
+  color: #ffffff;
+  text-align: center;
+  padding: 1rem;
+}
+.hero-title {
+  font-size: 2.25rem;
+  line-height: 1.25;
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+.hero-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+.hero-buttons a {
+  padding: 0.75rem 2rem;
+  font-weight: 700;
+  border-radius: 9999px; /* full rounded */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  transition: all 300ms ease;
+}
+.hero-buttons a:hover {
+  transform: scale(1.05);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+.join-btn {
+  background-color: #16a34a; /* green-600 */
+  color: #ffffff;
+}
+
+/* Sections */
+.section {
+  padding: 4rem 1rem;
+}
+.section-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+.section-subtitle {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.section-text {
+  color: #4b5563;
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.bg-gray {
+  background-color: #f3f4f6; /* gray-100 */
+}
+.text-center {
+  text-align: center;
+}
+
+/* Benefits & Products Grid */
+.card-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+.card-icon {
+  color: #3b82f6; /* blue-500 */
+  margin-bottom: 1rem;
+}
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+.card-text {
+  color: #4b5563;
+}
+.product-image {
+  width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* Reviews */
+.reviews-grid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+}
+.review-card {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-top: 4px solid #3b82f6;
+}
+.review-stars {
+  color: #fcd34d; /* yellow-400 */
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.review-text {
+  color: #4b5563;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+.review-author {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Feedback Form */
+.feedback-form-container {
+  padding: 4rem 1rem;
+}
+.feedback-form {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 48rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.feedback-textarea {
+  width: 100%;
+  height: 8rem;
+  padding: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: all 200ms ease;
+  outline: none;
+}
+.feedback-textarea:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+.feedback-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #16a34a; /* green-600 */
+  color: #ffffff;
+  font-weight: 700;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: background-color 200ms;
+}
+.feedback-button:hover {
+  background-color: #15803d; /* green-700 */
+}
+.message-success {
+  color: #16a34a; /* green-600 */
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+.message-error {
+  color: #ef4444; /* red-500 */
+  margin-top: 1rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Footer */
+.footer {
+  background-color: #1f2937; /* gray-800 */
+  color: #d1d5db; /* gray-300 */
+  padding: 3rem 1rem;
+  text-align: center;
+}
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.footer-links a:hover {
+  color: #60a5fa; /* blue-400 */
+}
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+  .nav-links, .auth-buttons {
+    display: flex;
+  }
+  .hero-title {
+    font-size: 3.75rem; /* 6xl */
+  }
+  .hero-buttons {
+    flex-direction: row;
+  }
+  .card-grid, .reviews-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
