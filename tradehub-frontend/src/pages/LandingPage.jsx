@@ -1,37 +1,62 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import { Sparkle, Truck, Tag, Users, Package } from 'lucide-react';
-import './LandingPage.css'; 
+import { Sparkle, Truck, Tag, Users, Package, Star } from 'lucide-react';
+import './LandingPage.css';
 
 
 const LandingPage = () => {
   const initialReviews = [
-    { id: '1', name: "Bole", stars: "★★★★★", text: "Trade Hub has revolutionized how we source our home supplies. The platform is user-friendly and the quality of products is exceptional." },
-    { id: '2', name: "Aagayan", stars: "★★★★★", text: "The variety of suppliers on Trade Hub is impressive. We found a unique supplier for our boutique that we wouldn't have discovered otherwise. The service is reliable." },
-    { id: '3', name: "Malveda", stars: "★★★★★", text: "Our partnership with Trade Hub has significantly increased our brand visibility and sales. Their support team is always responsive and helpful." }
+    { id: '1', name: "Bole", stars: 5, text: "Trade Hub has revolutionized how we source our home supplies. The platform is user-friendly and the quality of products is exceptional." },
+    { id: '2', name: "Aagayan", stars: 5, text: "The variety of suppliers on Trade Hub is impressive. We found a unique supplier for our boutique that we wouldn't have discovered otherwise. The service is reliable." },
+    { id: '3', name: "Malveda", stars: 5, text: "Our partnership with Trade Hub has significantly increased our brand visibility and sales. Their support team is always responsive and helpful." }
   ];
 
   const [reviews, setReviews] = useState(initialReviews);
   const [newFeedback, setNewFeedback] = useState("");
+  const [userName, setUserName] = useState("");
+  const [starRating, setStarRating] = useState(0);
+  const [hoverRating, setHoverRating] = useState(0); // State for hover effect
   const [message, setMessage] = useState('');
 
   const handleFeedbackSubmit = (event) => {
     event.preventDefault();
-    if (newFeedback.trim() === '') {
-      setMessage('Please write some feedback before submitting.');
+    if (newFeedback.trim() === '' || userName.trim() === '' || starRating === 0) {
+      setMessage('Please fill in your name, select a star rating, and write your feedback.');
       return;
     }
     
     const newReview = {
       id: crypto.randomUUID(), 
-      name: "Anonymous User",
-      stars: "★★★★★",
+      name: userName,
+      stars: starRating,
       text: newFeedback
     };
 
     setReviews(prevReviews => [...prevReviews, newReview]);
     setNewFeedback("");
+    setUserName("");
+    setStarRating(0);
     setMessage('Thank you for your feedback!');
+  };
+
+  
+  const renderStars = (rating) => {
+    const stars = [];
+    for (let i = 1; i <= 5; i++) {
+      stars.push(
+        <Star
+          key={i}
+          fill={i <= rating ? '#FFD700' : 'none'}
+          stroke={i <= rating ? '#FFD700' : '#4b5563'}
+          size={20}
+          className="cursor-pointer transition-colors duration-200"
+          onMouseEnter={() => setHoverRating(i)}
+          onMouseLeave={() => setHoverRating(0)}
+          onClick={() => setStarRating(i)}
+        />
+      );
+    }
+    return stars;
   };
 
   return (
@@ -137,7 +162,17 @@ const LandingPage = () => {
           <div className="reviews-grid">
             {reviews.map(review => (
               <div className="review-card" key={review.id}>
-                <div className="review-stars">{review.stars}</div>
+                <div className="review-stars-display flex">
+                  
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <Star
+                      key={i}
+                      fill={i < review.stars ? '#ffff00ff' : 'none'}
+                      stroke={i < review.stars ? '#ffff00ff' : '#4b5563'}
+                      size={20}
+                    />
+                  ))}
+                </div>
                 <p className="review-text">"{review.text}"</p>
                 <h4 className="review-author">- {review.name}</h4>
               </div>
@@ -151,6 +186,23 @@ const LandingPage = () => {
         <div className="container">
           <h2 className="section-title text-center">Submit Feedback</h2>
           <form className="feedback-form" onSubmit={handleFeedbackSubmit}>
+            <div className="form-group">
+              <input
+                type="text"
+                placeholder="Your Name"
+                required
+                value={userName}
+                onChange={(e) => setUserName(e.target.value)}
+                className="feedback-input"
+              />
+            </div>
+            <div className="form-group">
+              <div className="star-rating-container">
+                <div className="star-rating">
+                  {renderStars(hoverRating || starRating)}
+                </div>
+              </div>
+            </div>
             <div className="form-group">
               <textarea
                 placeholder="Write your feedback..."
@@ -192,4 +244,3 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
-

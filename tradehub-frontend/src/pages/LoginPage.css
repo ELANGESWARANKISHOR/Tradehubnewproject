@@ -1,0 +1,180 @@
+/* Global styles for the login page */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb; /* Light gray background */
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Container for the entire login page */
+.login-container {
+  width: 100%;
+  max-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header styling */
+.header-login {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem 2rem;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header-logo .logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+/* Main content area */
+.main-content-login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex-grow: 1;
+  padding: 2rem;
+  box-sizing: border-box;
+}
+
+/* The login form box */
+.login-box {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  max-width: 28rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.login-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  text-align: center;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+/* Role selection buttons */
+.role-selection {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.role-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 2rem;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px; /* full rounded */
+  cursor: pointer;
+  font-weight: 600;
+  color: #4b5563;
+  transition: all 0.2s ease-in-out;
+}
+
+.role-label.selected {
+  background-color: #16a34a; /* green-600 */
+  color: #ffffff;
+  border-color: #16a34a;
+}
+
+.role-label input[type="radio"] {
+  display: none;
+}
+
+/* Form inputs */
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-input:focus {
+  border-color: #2563eb;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+/* Forgot password link */
+.forgot-password {
+  display: block;
+  text-align: right;
+  font-size: 0.875rem;
+  color: #2563eb;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.forgot-password:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
+}
+
+/* Login button */
+.login-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #16a34a; /* green-600 */
+  color: #ffffff;
+  font-weight: 700;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  transition: background-color 0.2s ease-in-out;
+}
+
+.login-button:hover {
+  background-color: #15803d; /* green-700 */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .header-login {
+    padding: 1rem;
+  }
+  .main-content-login {
+    padding: 1rem;
+  }
+  .login-box {
+    padding: 1.5rem;
+  }
+}
