@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 
-// Find the root element in the HTML document.
+
 const rootElement = document.getElementById('root');
 
 // Create a React root for the application.

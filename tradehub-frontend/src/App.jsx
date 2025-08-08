@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import UserRegistration from './pages/user/UserRegistration';
+import SellerRegistration from './pages/seller/SellerRegistration';
 import './App.css'; 
 
 const App = () => {
@@ -12,9 +13,13 @@ const App = () => {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup-buyer" element={<UserRegistration />} />
+        <Route path="/signup-seller" element={<SellerRegistration />} />
+        
       </Routes>
     </Router>
   );
 };
 
 export default App;
+
+

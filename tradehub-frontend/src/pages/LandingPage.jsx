@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Sparkle, Truck, Tag, Users, Package, Star } from 'lucide-react';
 import './LandingPage.css';
 
-
+// This is the complete Landing Page component with the updated feedback functionality.
 const LandingPage = () => {
   const initialReviews = [
     { id: '1', name: "Bole", stars: 5, text: "Trade Hub has revolutionized how we source our home supplies. The platform is user-friendly and the quality of products is exceptional." },
@@ -15,7 +15,7 @@ const LandingPage = () => {
   const [newFeedback, setNewFeedback] = useState("");
   const [userName, setUserName] = useState("");
   const [starRating, setStarRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0); 
+  const [hoverRating, setHoverRating] = useState(0); // State for hover effect
   const [message, setMessage] = useState('');
 
   const handleFeedbackSubmit = (event) => {
@@ -39,7 +39,7 @@ const LandingPage = () => {
     setMessage('Thank you for your feedback!');
   };
 
-  
+  // Function to render stars based on a rating value
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -81,7 +81,7 @@ const LandingPage = () => {
         </div>
       </header>
 
-      
+      {/* Hero Section */}
       <section id="home" className="hero-section">
         <div className="hero-overlay"></div>
         <div className="hero-content">
@@ -93,7 +93,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      
+      {/* About Section */}
       <section id="about" className="section text-center">
         <div className="container">
           <h2 className="section-title">About Trade Hub</h2>
@@ -107,7 +107,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      
+      {/* Benefits Section */}
       <section className="section bg-gray">
         <div className="container">
           <h2 className="section-title text-center">Benefits of Trade Hub</h2>
@@ -131,7 +131,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      
+      {/* Featured Products Section */}
       <section className="section">
         <div className="container">
           <h2 className="section-title text-center">Featured Products</h2>
@@ -149,13 +149,13 @@ const LandingPage = () => {
             <div className="card">
               <img src="https://placehold.co/400x300/fecaca/0f172a?text=Notebook" alt="Notebook" className="product-image" />
               <h3 className="card-title">Notebook</h3>
-              <p className="card-text">Our notebook is perfect for all your learnings...</p>
+              <p className="card-text">Our notebook is perfect for all your needs...</p>
             </div>
           </div>
         </div>
       </section>
 
-      
+      {/* Reviews Section */}
       <section className="section bg-gray">
         <div className="container">
           <h2 className="section-title text-center">Reviews</h2>
@@ -163,7 +163,7 @@ const LandingPage = () => {
             {reviews.map(review => (
               <div className="review-card" key={review.id}>
                 <div className="review-stars-display flex">
-                  
+                  {/* Display stars based on the review rating */}
                   {Array.from({ length: 5 }, (_, i) => (
                     <Star
                       key={i}
@@ -181,7 +181,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      
+      {/* Feedback Section */}
       <section id="feedback" className="feedback-form-container">
         <div className="container">
           <h2 className="section-title text-center">Submit Feedback</h2>
@@ -227,7 +227,7 @@ const LandingPage = () => {
         </div>
       </section>
 
-      
+      {/* Footer */}
       <footer id="contact" className="footer">
         <div className="container">
           <div className="footer-links">
@@ -244,3 +244,4 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
