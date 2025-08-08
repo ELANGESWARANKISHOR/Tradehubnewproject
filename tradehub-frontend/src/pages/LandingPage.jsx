@@ -15,7 +15,7 @@ const LandingPage = () => {
   const [newFeedback, setNewFeedback] = useState("");
   const [userName, setUserName] = useState("");
   const [starRating, setStarRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0); // State for hover effect
+  const [hoverRating, setHoverRating] = useState(0); 
   const [message, setMessage] = useState('');
 
   const handleFeedbackSubmit = (event) => {
@@ -149,7 +149,7 @@ const LandingPage = () => {
             <div className="card">
               <img src="https://placehold.co/400x300/fecaca/0f172a?text=Notebook" alt="Notebook" className="product-image" />
               <h3 className="card-title">Notebook</h3>
-              <p className="card-text">Our notebook is perfect for all your needs...</p>
+              <p className="card-text">Our notebook is perfect for all your learnings...</p>
             </div>
           </div>
         </div>
