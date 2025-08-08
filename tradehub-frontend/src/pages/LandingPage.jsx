@@ -61,7 +61,7 @@ const LandingPage = () => {
 
   return (
     <div className="landing-page-container">
-      
+      {/* Header */}
       <header className="header">
         <div className="container header-content">
           <div className="logo">
@@ -76,7 +76,7 @@ const LandingPage = () => {
           </nav>
           <div className="auth-buttons">
             <Link to="/login" className="login-btn">Login</Link>
-            <Link to="/signup" className="signup-btn">Sign Up</Link>
+            <Link to="/signup-buyer" className="signup-btn">Sign Up</Link>
           </div>
         </div>
       </header>
@@ -87,8 +87,8 @@ const LandingPage = () => {
         <div className="hero-content">
           <h1 className="hero-title">Connect with a global network of businesses</h1>
           <div className="hero-buttons">
-            <Link to="/signup" className="join-btn">Join as Buyer</Link>
-            <Link to="/signup" className="join-btn">Join as Seller</Link>
+            <Link to="/signup-buyer" className="join-btn">Join as Buyer</Link>
+            <Link to="/signup-buyer" className="join-btn">Join as Seller</Link>
           </div>
         </div>
       </section>
@@ -167,8 +167,8 @@ const LandingPage = () => {
                   {Array.from({ length: 5 }, (_, i) => (
                     <Star
                       key={i}
-                      fill={i < review.stars ? '#ffff00ff' : 'none'}
-                      stroke={i < review.stars ? '#ffff00ff' : '#4b5563'}
+                      fill={i < review.stars ? '#FFD700' : 'none'}
+                      stroke={i < review.stars ? '#FFD700' : '#4b5563'}
                       size={20}
                     />
                   ))}
