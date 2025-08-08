@@ -1,4 +1,4 @@
-/* Global styles */
+
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
@@ -33,7 +33,7 @@ a {
 }
 
 
-/* Header */
+
 .header {
   position: fixed;
   width: 100%;
@@ -112,7 +112,7 @@ a {
 }
 
 
-/* Hero Section */
+
 .hero-section {
   position: relative;
   min-height: 100vh;
@@ -120,10 +120,10 @@ a {
   align-items: center;
   justify-content: center;
   text-align: center;
-  /* Use a placeholder image for the background */
+  
   background: url('https://placehold.co/1200x800/e5e7eb/0f172a?text=Background+Image') no-repeat center center/cover;
-  /* THIS IS THE CRITICAL FIX */
-  padding-top: 80px; /* To prevent content from being hidden behind the fixed header */
+  
+  padding-top: 80px; 
 }
 
 .hero-overlay {
@@ -171,7 +171,7 @@ a {
 }
 
 
-/* General Sections */
+
 .section {
   padding: 4rem 0;
 }
@@ -202,7 +202,7 @@ a {
 }
 
 
-/* Card Grid */
+
 .card-grid {
   display: grid;
   gap: 2rem;
@@ -247,7 +247,7 @@ a {
 }
 
 
-/* Reviews */
+
 .reviews-grid {
   display: grid;
   gap: 2rem;
@@ -283,7 +283,7 @@ a {
 }
 
 
-/* Feedback Form */
+
 .feedback-form-container {
   padding: 4rem 0;
   background-color: #f3f4f6;
