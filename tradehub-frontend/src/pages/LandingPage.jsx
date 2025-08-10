@@ -15,7 +15,7 @@ const LandingPage = () => {
   const [newFeedback, setNewFeedback] = useState("");
   const [userName, setUserName] = useState("");
   const [starRating, setStarRating] = useState(0);
-  const [hoverRating, setHoverRating] = useState(0); // State for hover effect
+  const [hoverRating, setHoverRating] = useState(0); 
   const [message, setMessage] = useState('');
 
   const handleFeedbackSubmit = (event) => {
@@ -64,7 +64,15 @@ const LandingPage = () => {
       <header className="header">
         <div className="container header-content">
           <div className="logo">
-            <Sparkle className="text-blue-600" size={28} />
+            <svg
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M4 4H17.3334V17.3334H30.6666V30.6666H44V44H4V4Z" fill="currentColor" />
+          </svg>
             <div className="logo-text">Trade Hub</div>
           </div>
           <nav className="nav-links">
@@ -87,7 +95,7 @@ const LandingPage = () => {
           <h1 className="hero-title">Connect with a global network of businesses</h1>
           <div className="hero-buttons">
             <Link to="/signup-buyer" className="join-btn">Join as Buyer</Link>
-            <Link to="/signup-buyer" className="join-btn">Join as Seller</Link>
+            <Link to="/signup-seller" className="join-btn">Join as Seller</Link>
           </div>
         </div>
       </section>

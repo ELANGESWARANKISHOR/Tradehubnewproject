@@ -1,8 +1,19 @@
 
+html {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
 body {
   font-family: 'Inter', sans-serif;
   line-height: 1.6;
-  color: #333;
+  color: #adadad;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -24,12 +35,14 @@ a {
   flex-direction: column;
   min-height: 100vh;
   background-color: #f9fafb;
+  max-width: 100%;
+  width:100%;
 }
 
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  max-width: 1200px; 
+  margin: 0 auto;   
+  padding: 0 1rem;  
 }
 
 
@@ -38,7 +51,7 @@ a {
   position: fixed;
   width: 100%;
   height: 100px;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: #F7FCF7;
   backdrop-filter: blur(8px);
   padding: 0.8rem 0;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
@@ -61,6 +74,7 @@ a {
 }
 
 .logo-text {
+  align-items: left;
   font-weight: 800;
 }
 
@@ -121,7 +135,6 @@ a {
   justify-content: center;
   text-align: center;
   
-  background: url('https://placehold.co/1200x800/e5e7eb/0f172a?text=Background+Image') no-repeat center center/cover;
   
   padding-top: 80px; 
 }
@@ -359,7 +372,7 @@ a {
 
 /* Footer */
 .footer {
-  background-color: #1f2937;
+  background-color: #a9ffe8;
   color: #d1d5db;
   padding: 2rem 0;
   text-align: center;
