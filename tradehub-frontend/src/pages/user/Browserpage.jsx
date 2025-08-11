@@ -2,16 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import './styles.css';
+import milk from '../../assets/milk.jpg';
+import Organicapple from '../../assets/Organic apple.jpg';
+import Painrelief from '../../assets/PainRelief.jpg';
+import Novel from '../../assets/Novel.jpg';
+import Handwash from '../../assets/Handwash.jpg';
+import flu from '../../assets/flu.jpg';
+import Textbook from '../../assets/Textbook.jpg';
 
 const BrowserPage = () => {
   const products = [
-    { id: '1', name: 'Organic Apples', image: 'http://googleusercontent.com/file_content/0' },
-    { id: '2', name: 'Pain Relief Tablets', image: 'http://googleusercontent.com/file_content/1' },
-    { id: '3', name: 'Bestseller Novel', image: 'http://googleusercontent.com/file_content/0' },
-    { id: '4', name: 'Bulk Cleaning Supplies', image: 'http://googleusercontent.com/file_content/1' },
-    { id: '5', name: 'Fresh Milk', image: 'http://googleusercontent.com/file_content/0' },
-    { id: '6', name: 'Cold Remedy Capsules', image: 'http://googleusercontent.com/file_content/1' },
-    { id: '7', name: 'Educational Textbook', image: 'http://googleusercontent.com/file_content/0' },
+    { id: '1', name: 'Organic Apples', image: Organicapple },
+    { id: '2', name: 'Pain Relief Tablets', image: Painrelief },
+    { id: '3', name: 'Bestseller Novel', image: Novel },
+    { id: '4', name: 'Hand Wash', image: Handwash },
+    { id: '5', name: 'Fresh Milk', image: milk},
+    { id: '6', name: 'Cold Remedy Capsules', image: flu },
+    { id: '7', name: 'Educational Textbook', image: Textbook },
     { id: '8', name: 'Office Paper Reams', image: 'http://googleusercontent.com/file_content/1' },
   ];
 

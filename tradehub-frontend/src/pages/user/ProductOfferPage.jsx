@@ -2,6 +2,7 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import './styles.css';
+import milk from '../../assets/milk.jpg';
 
 const ProductOfferPage = () => {
   const { productId } = useParams();
@@ -14,7 +15,7 @@ const ProductOfferPage = () => {
     discount: '10%',
     deliveryCharge: '$0.50 per km',
     totalPrice: '$4.50',
-    image: 'http://googleusercontent.com/file_content/2'
+    image: milk
   };
 
   return (

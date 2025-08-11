@@ -1,20 +1,24 @@
 import React from 'react';
 import Sidebar from './Sidebar';
 import './styles.css';
+import milk from '../../assets/Milk.jpg';
+import Novel from '../../assets/Novel.jpg';
+
+
 
 const AccountPage = () => {
   const orderHistory = [
     {
       id: '123456',
       deliveredOn: 'June, 20, 2025',
-      image: 'http://googleusercontent.com/file_content/2',
+      image: milk,
       volume: '40L',
       total: 4900
     },
     {
       id: '789012',
       deliveredOn: 'July, 2, 2025',
-      image: 'http://googleusercontent.com/file_content/3',
+      image: Novel,
       volume: '5 item',
       total: 7500
     }

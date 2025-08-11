@@ -25,7 +25,7 @@ const SellerAnalysis = () => {
               <span className="sales-change-indicator up">+10%</span>
             </div>
             <div className="sales-graph">
-                <img src="http://googleusercontent.com/file_content/1" alt="Sales Graph" />
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Bar_chart_of_Facebook_shares_sold_in_Q4_2012.svg/1200px-Bar_chart_of_Facebook_shares_sold_in_Q4_2012.svg.png" alt="Sales Graph" />
             </div>
           </div>
         </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import './styles.css';
+import summersale from '../../assets/summersale.jpg';
 
 const HomePage = () => {
   const trendingProducts = [
@@ -39,21 +40,21 @@ const HomePage = () => {
       <h2 className="section-title">Current Offers</h2>
       <div className="current-offers-grid">
         <div className="offer-card">
-          <div className="offer-image" style={{ backgroundImage: 'url("https://cdn.pixabay.com/photo/2017/01/31/22/25/sale-2028249_1280.jpg")' }}></div>
+          <div className="offer-image" style={{ backgroundImage: `url(${summersale})` }}></div>
           <div className="offer-details">
             <p className="offer-title">Summer Sale</p>
             <p className="offer-description">Up to 50% off</p>
           </div>
         </div>
         <div className="offer-card">
-          <div className="offer-image" style={{ backgroundImage: 'url("http://googleusercontent.com/file_content/1")' }}></div>
+          <div className="offer-image" style={{ backgroundImage: `url(${summersale})` }}></div>
           <div className="offer-details">
             <p className="offer-title">Back to School Deals</p>
             <p className="offer-description">Discounts on school supplies and more</p>
           </div>
         </div>
         <div className="offer-card">
-          <div className="offer-image" style={{ backgroundImage: 'url("http://googleusercontent.com/file_content/0")' }}></div>
+          <div className="offer-image" style={{ backgroundImage: `url(${summersale})` }}></div>
           <div className="offer-details">
             <p className="offer-title">Clearance Event</p>
             <p className="offer-description">Last chance to grab these items</p>
