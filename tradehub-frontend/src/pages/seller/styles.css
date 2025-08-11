@@ -1,0 +1,377 @@
+/* Base Layout & Shared Styles */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9fafb;
+  margin: 0;
+}
+
+.page-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1.5rem;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 256px;
+  background-color: #fff;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  color: #4a5568;
+  transition: background-color 0.2s ease;
+  text-decoration: none;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #e2e8f0;
+  color: #1a202c;
+}
+
+.nav-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.nav-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.sidebar-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* Seller Dashboard Home Page Specifics */
+.seller-dashboard-header {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.shop-info {
+  flex: 1;
+}
+
+.shop-info h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin: 0;
+}
+
+.shop-info p {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.shop-image {
+  width: 200px;
+  height: 120px;
+  border-radius: 0.5rem;
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+
+.seller-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.metric-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.metric-label {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.recent-orders-table-container {
+  overflow-x: auto;
+}
+
+.recent-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.recent-orders-table th,
+.recent-orders-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.recent-orders-table th {
+  font-weight: 600;
+  color: #718096;
+}
+
+.status-tag {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.status-pending {
+  background-color: #ffc107;
+  color: #333;
+}
+
+.status-delivered {
+  background-color: #28a745;
+}
+
+.status-shipped {
+  background-color: #007bff;
+}
+
+/* Add Product Page Specifics */
+.add-product-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a5568;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.add-product-btn {
+  background-color: #38a169;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  align-self: flex-end;
+}
+
+/* Manage Products & Orders Page Specifics */
+.manage-products-table-container,
+.manage-orders-table-container {
+  overflow-x: auto;
+}
+
+.manage-products-table,
+.manage-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.manage-products-table th,
+.manage-products-table td,
+.manage-orders-table th,
+.manage-orders-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.manage-products-table th,
+.manage-orders-table th {
+  font-weight: 600;
+  color: #718096;
+}
+
+.action-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  margin-left: 0.5rem;
+}
+
+.edit-btn {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.delete-btn {
+  background-color: #e53e3e;
+  color: #fff;
+}
+
+.confirm-btn {
+  background-color: #38a169;
+  color: #fff;
+}
+
+/* Seller Analytics Page Specifics */
+.analysis-subtitle {
+  font-size: 0.875rem;
+  color: #718096;
+  margin-bottom: 2rem;
+}
+
+.analysis-section {
+  margin-bottom: 2rem;
+}
+
+.analysis-section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 1rem;
+}
+
+.sales-overview-card {
+  display: flex;
+  gap: 2rem;
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.total-sales {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.total-sales-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.total-sales-label {
+  font-size: 1rem;
+  color: #718096;
+}
+
+.sales-change-indicator {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #28a745;
+  margin-top: 0.25rem;
+}
+
+.sales-graph {
+  flex: 1;
+  background-color: #e2e8f0;
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+
+.engagement-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.analysis-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-table th,
+.analysis-table td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.analysis-table th {
+  font-weight: 600;
+  color: #718096;
+}
+
+.analysis-table td {
+  color: #4a5568;
+}

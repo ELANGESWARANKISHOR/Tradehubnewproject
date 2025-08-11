@@ -10,6 +10,11 @@ import BrowserPage from './pages/user/Browserpage';
 import ProductOfferPage from './pages/user/ProductOfferPage';
 import CartPage from './pages/user/CartPage';
 import AccountPage from './pages/user/AccountPage';
+import SellerDashboard from './pages/seller/SellerDashboard';
+import AddProduct from './pages/seller/AddProduct';
+import ManageProducts from './pages/seller/ManageProducts';
+import ManageOrders from './pages/seller/ManageOrders';
+import SellerAnalysis from './pages/seller/SellerAnalysis';
 
 
 
@@ -27,6 +32,13 @@ const App = () => {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/logout" element={<LandingPage />} />
+        <Route path="/logout2" element={<LandingPage />} />
+        <Route path="/seller-dashboard" element={<SellerDashboard />} />
+        <Route path="/addproduct" element={<AddProduct />} />
+        <Route path="/manageproduct" element={<ManageProducts />} />
+        <Route path="/manageorder" element={<ManageOrders />} />
+        <Route path="/selleranalysis" element={<SellerAnalysis />} />
+        
       </Routes>
     </Router>
   );
