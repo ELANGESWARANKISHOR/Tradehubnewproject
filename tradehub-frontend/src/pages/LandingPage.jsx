@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import { Sparkle, Truck, Tag, Users, Package, Star } from 'lucide-react';
 import './LandingPage.css';
-
-
+import applesImage from '../assets/Organic apple.jpg';
+import Milk from '../assets/Milk.jpg';
+import Textbook from '../assets/Textbook.jpg';
 const LandingPage = () => {
   const initialReviews = [
-    { id: '1', name: "Bole", stars: 5, text: "Trade Hub has revolutionized how we source our home supplies. The platform is user-friendly and the quality of products is exceptional." },
-    { id: '2', name: "Aagayan", stars: 5, text: "The variety of suppliers on Trade Hub is impressive. We found a unique supplier for our boutique that we wouldn't have discovered otherwise. The service is reliable." },
-    { id: '3', name: "Malveda", stars: 5, text: "Our partnership with Trade Hub has significantly increased our brand visibility and sales. Their support team is always responsive and helpful." }
+    { id: '1', name: "Kishor", stars: 5, text: "Trade Hub has revolutionized how we source our home supplies. The platform is user-friendly and the quality of products is exceptional." },
+    { id: '2', name: "Sajeevan", stars: 5, text: "The variety of suppliers on Trade Hub is impressive. We found a unique supplier for our boutique that we wouldn't have discovered otherwise. The service is reliable." },
+    { id: '3', name: "Gowsikan", stars: 5, text: "Our partnership with Trade Hub has significantly increased our brand visibility and sales. Their support team is always responsive and helpful." }
   ];
 
   const [reviews, setReviews] = useState(initialReviews);
@@ -144,17 +145,17 @@ const LandingPage = () => {
           <h2 className="section-title text-center">Featured Products</h2>
           <div className="card-grid">
             <div className="card">
-              <img src="https://placehold.co/400x300/a3e635/0f172a?text=Apples" alt="Organic Apples" className="product-image" />
+              <img src= {applesImage} alt="Organic Apples" className="product-image" />
               <h3 className="card-title">Organic Apples</h3>
               <p className="card-text">Organic apples are known for their fresh...</p>
             </div>
             <div className="card">
-              <img src="https://placehold.co/400x300/e0e7ff/0f172a?text=Fresh+Milk" alt="Fresh Milk" className="product-image" />
+              <img src={Milk} alt="Fresh Milk" className="product-image" />
               <h3 className="card-title">Fresh Milk</h3>
               <p className="card-text">Sourced from local farms with our unique...</p>
             </div>
             <div className="card">
-              <img src="https://placehold.co/400x300/fecaca/0f172a?text=Notebook" alt="Notebook" className="product-image" />
+            <img src={Textbook} alt="Notebook" className="product-image" />
               <h3 className="card-title">Notebook</h3>
               <p className="card-text">Our notebook is perfect for all your needs...</p>
             </div>
