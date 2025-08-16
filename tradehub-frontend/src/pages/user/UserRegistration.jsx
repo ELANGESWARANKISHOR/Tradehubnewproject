@@ -1,8 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Sparkle } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 import './UserRegistration.css';
 
+// Fix default marker icon issue in Leaflet
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
+  iconUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
+  shadowUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+});
+
+const LocationMarker = ({ setFormData }) => {
+  const [position, setPosition] = useState(null);
+
+  useMapEvents({
+    click(e) {
+      setPosition(e.latlng);
+      setFormData(prev => ({
+        ...prev,
+        latitude: e.latlng.lat,
+        longitude: e.latlng.lng,
+      }));
+    },
+  });
+
+  return position === null ? null : <Marker position={position}></Marker>;
+};
 
 const UserRegistration = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +39,8 @@ const UserRegistration = () => {
     email: '',
     password: '',
     confirmPassword: '',
-    address: '',
+    latitude: '',
+    longitude: '',
     district: '',
     contactNumber: '',
   });
@@ -23,7 +53,7 @@ const UserRegistration = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log('User registration data submitted:', formData);
-    alert("Registration successful!");
+    alert('Registration successful!');
   };
 
   return (
@@ -33,7 +63,7 @@ const UserRegistration = () => {
           Sign In
         </Link>
       </header>
-      
+
       <main className="main-content-registration">
         <div className="registration-box">
           <h2 className="registration-title">Create your account</h2>
@@ -49,6 +79,7 @@ const UserRegistration = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <input
                 type="email"
@@ -60,6 +91,7 @@ const UserRegistration = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <input
                 type="password"
@@ -71,6 +103,7 @@ const UserRegistration = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <input
                 type="password"
@@ -82,17 +115,29 @@ const UserRegistration = () => {
                 required
               />
             </div>
+
+            {/* Map Picker */}
             <div className="form-group">
-              <input
-                type="text"
-                name="address"
-                placeholder="Address"
-                value={formData.address}
-                onChange={handleChange}
-                className="form-input"
-                required
-              />
+              <label>Select your location:</label>
+              <MapContainer
+                center={[7.8731, 80.7718]} // Default to Sri Lanka center
+                zoom={7}
+                style={{ height: '250px', width: '100%', marginTop: '0.5rem' }}
+              >
+                <TileLayer
+                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  attribution="&copy; OpenStreetMap contributors"
+                />
+                <LocationMarker setFormData={setFormData} />
+              </MapContainer>
+              {formData.latitude && formData.longitude && (
+                <p className="location-display">
+                  📍 Lat: {formData.latitude.toFixed(5)}, Lng:{' '}
+                  {formData.longitude.toFixed(5)}
+                </p>
+              )}
             </div>
+
             <div className="form-group">
               <input
                 type="text"
@@ -104,6 +149,7 @@ const UserRegistration = () => {
                 required
               />
             </div>
+
             <div className="form-group">
               <input
                 type="tel"
@@ -115,10 +161,12 @@ const UserRegistration = () => {
                 required
               />
             </div>
+
             <button type="submit" className="registration-button">
               Register
             </button>
           </form>
+
           <div className="login-prompt">
             Already have an account? <Link to="/login">Sign In</Link>
           </div>
