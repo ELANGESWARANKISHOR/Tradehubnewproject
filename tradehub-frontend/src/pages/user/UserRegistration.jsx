@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './UserRegistration.css';
 
-// Fix default marker icon issue in Leaflet
+
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -50,10 +50,30 @@ const UserRegistration = () => {
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('User registration data submitted:', formData);
-    alert('Registration successful!');
+  try {
+    const response = await fetch('http://localhost:8092/api/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      alert('Registration successful!');
+      console.log(data);
+    } else {
+      const errorData = await response.json();
+      alert('Registration failed: ' + errorData.message);
+      console.error(errorData);
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Something went wrong');
+  }
   };
 
   return (

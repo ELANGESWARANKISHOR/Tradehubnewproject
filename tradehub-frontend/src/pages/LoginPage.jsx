@@ -1,32 +1,63 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from 'react-router-dom';
-import { Sparkle } from 'lucide-react';
+import { Link, useNavigate } from "react-router-dom";
+import { Sparkle } from "lucide-react";
 import "./LoginPage.css";
 
 const LoginPage = () => {
   const [role, setRole] = useState("buyer");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleRoleChange = (e) => {
     setRole(e.target.value);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log({ role, email, password });
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  setLoading(true);
 
+  try {
+    
+    const url =
+      role === "buyer"
+        ? "http://localhost:8092/api/users/login"
+        : "http://localhost:8093/api/sellers/login";
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Invalid credentials");
+    }
+
+    const data = await response.json();
+    console.log("Login successful:", data);
+
+    // Save JWT token in local storage
+    localStorage.setItem("token", data.token);
+
+    // Redirect based on role
     if (role === "buyer") {
       navigate("/user-dashboard");
     } else if (role === "seller") {
       navigate("/seller-dashboard");
     }
-  };
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Login failed: " + error.message);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="login-container">
-      
       <header className="header-login">
         <div className="header-logo">
           <Link to="/" className="flex items-center gap-2 text-current">
@@ -36,21 +67,17 @@ const LoginPage = () => {
         </div>
       </header>
 
-      
       <main className="main-content-login">
         <div className="login-box">
           <h2 className="login-title">Log in to Trade Hub</h2>
 
-          
           <div className="role-selection">
             <label
               className={`role-label ${role === "buyer" ? "selected" : ""}`}
-              htmlFor="buyer"
             >
               Buyer
               <input
                 type="radio"
-                id="buyer"
                 name="role"
                 value="buyer"
                 checked={role === "buyer"}
@@ -59,12 +86,10 @@ const LoginPage = () => {
             </label>
             <label
               className={`role-label ${role === "seller" ? "selected" : ""}`}
-              htmlFor="seller"
             >
               Seller
               <input
                 type="radio"
-                id="seller"
                 name="role"
                 value="seller"
                 checked={role === "seller"}
@@ -73,15 +98,11 @@ const LoginPage = () => {
             </label>
           </div>
 
-          
           <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label className="form-label" htmlFor="email">
-                Email
-              </label>
+              <label className="form-label">Email</label>
               <input
                 className="form-input"
-                id="email"
                 type="email"
                 placeholder="Email"
                 value={email}
@@ -91,12 +112,9 @@ const LoginPage = () => {
             </div>
 
             <div className="form-group">
-              <label className="form-label" htmlFor="password">
-                Password
-              </label>
+              <label className="form-label">Password</label>
               <input
                 className="form-input"
-                id="password"
                 type="password"
                 placeholder="Password"
                 value={password}
@@ -109,8 +127,12 @@ const LoginPage = () => {
               Forgot password?
             </Link>
 
-            <button type="submit" className="login-button">
-              Log In
+            <button
+              type="submit"
+              className="login-button"
+              disabled={loading}
+            >
+              {loading ? "Logging in..." : "Log In"}
             </button>
           </form>
         </div>
