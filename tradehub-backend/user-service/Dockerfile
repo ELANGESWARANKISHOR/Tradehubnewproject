@@ -1,14 +1,15 @@
-FROM openjdk:21-jdk-slim
+# Use official OpenJDK 21 image
+FROM eclipse-temurin:21-jdk-jammy
 
+# Set working directory inside container
 WORKDIR /app
 
-COPY pom.xml .
-RUN apt-get update && apt-get install -y maven
-RUN mvn dependency:go-offline
+# Copy the built jar file
+COPY target/user-service-0.0.1-SNAPSHOT.jar app.jar
 
-COPY src ./src
-RUN mvn clean package -DskipTests
-
+# Expose the port your service uses
 EXPOSE 8092
 
-ENTRYPOINT ["java","-jar","target/user-service-0.0.1-SNAPSHOT.jar"]
+# Run the jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
+

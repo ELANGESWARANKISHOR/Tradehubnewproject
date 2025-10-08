@@ -1,5 +1,5 @@
 FROM eclipse-temurin:21-jdk-jammy
 WORKDIR /app
-COPY target/seller-service-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8095
+COPY target/product-service-0.0.1-SNAPSHOT.jar app.jar
+EXPOSE 8093
 ENTRYPOINT ["java","-jar","app.jar"]

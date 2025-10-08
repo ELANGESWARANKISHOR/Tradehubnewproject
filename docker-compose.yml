@@ -1,0 +1,76 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: tradehub-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: tradehub
+      MYSQL_USER: tradehubuser
+      MYSQL_PASSWORD: tradehubpass
+    ports:
+      - "3307:3306"
+    networks:
+      - tradehub-network
+
+  user-service:
+    build:
+      context: ./tradehub-backend/user-service
+    container_name: user-service
+    ports:
+      - "8092:8092"
+    depends_on:
+      - mysql
+    networks:
+      - tradehub-network
+
+  product-service:
+    build:
+      context: ./tradehub-backend/product-service
+    container_name: product-service
+    ports:
+      - "8093:8093"
+    depends_on:
+      - mysql
+    networks:
+      - tradehub-network
+
+  order-service:
+    build:
+      context: ./tradehub-backend/order-service
+    container_name: order-service
+    ports:
+      - "8094:8094"
+    depends_on:
+      - mysql
+    networks:
+      - tradehub-network
+
+  seller-service:
+    build:
+      context: ./tradehub-backend/seller-service
+    container_name: seller-service
+    ports:
+      - "8095:8095"
+    depends_on:
+      - mysql
+    networks:
+      - tradehub-network
+
+  frontend:
+    build:
+      context: ./tradehub-frontend
+      dockerfile: Dockerfile
+    container_name: tradehub-frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - tradehub-network
+    depends_on:
+      - user-service
+      - product-service
+      - order-service
+      - seller-service
+
+networks:
+  tradehub-network:
+    driver: bridge
