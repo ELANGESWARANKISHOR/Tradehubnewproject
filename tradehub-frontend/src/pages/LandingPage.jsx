@@ -5,6 +5,8 @@ import './LandingPage.css';
 import applesImage from '../assets/Organic apple.jpg';
 import Milk from '../assets/Milk.jpg';
 import Textbook from '../assets/Textbook.jpg';
+import market from '../assets/market.png';
+
 const LandingPage = () => {
   const initialReviews = [
     { id: '1', name: "Kishor", stars: 5, text: "Trade Hub has revolutionized how we source our home supplies. The platform is user-friendly and the quality of products is exceptional." },
@@ -90,7 +92,13 @@ const LandingPage = () => {
       </header>
 
       
-      <section id="home" className="hero-section">
+      <section id="home" className="hero-section"
+      style={{
+              backgroundImage: `url(${market})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+            }}>
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">Connect with a global network of businesses</h1>

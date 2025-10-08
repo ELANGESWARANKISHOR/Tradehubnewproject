@@ -44,7 +44,7 @@ public ResponseEntity<Map<String, Object>> loginUser(@RequestBody Map<String, St
     String password = loginData.get("password");
     User user = userService.loginUser(email, password);
 
-    // Generate JWT token
+    
     String token = jwtUtil.generateToken(user.getEmail());
 
     Map<String, Object> response = Map.of(
