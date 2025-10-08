@@ -4,16 +4,16 @@ import './styles.css';
 
 const CartPage = () => {
   const [orders, setOrders] = useState([]);
-  const [sellerDeliveryRates, setSellerDeliveryRates] = useState({}); // example: { sellerId: rate }
+  const [sellerDeliveryRates, setSellerDeliveryRates] = useState({}); 
 
   useEffect(() => {
-    // Fetch all confirmed orders for the logged-in user
-    fetch('http://localhost:8093/api/orders?status=CONFIRMED') // Replace with your backend endpoint
+    
+    fetch('http://localhost:8093/api/orders?status=CONFIRMED') 
       .then(res => res.json())
       .then(data => setOrders(data))
       .catch(err => console.error('Error fetching confirmed orders:', err));
 
-    // Fetch seller delivery rates (optional)
+    
     fetch('http://localhost:8094/api/sellers/deliveryRates')
       .then(res => res.json())
       .then(data => setSellerDeliveryRates(data))
@@ -26,7 +26,7 @@ const CartPage = () => {
   };
 
   const renderOrder = (order) => {
-    const distance = 10; // example km; can be dynamic from user's location
+    const distance = 10; 
     const totalDelivery = order.items.reduce((sum, item) => sum + calculateDelivery(item.sellerId, distance), 0);
     const subtotal = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const totalDiscount = order.items.reduce((sum, item) => sum + (item.discount || 0), 0);

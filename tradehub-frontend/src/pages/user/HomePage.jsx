@@ -7,7 +7,7 @@ const HomePage = () => {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8093/api/products') // Get all products
+    fetch('http://localhost:8093/api/products') 
       .then(res => res.json())
       .then(data => setProducts(data))
       .catch(err => console.error('Error fetching products:', err));

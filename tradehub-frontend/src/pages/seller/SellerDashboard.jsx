@@ -9,7 +9,7 @@ const SellerDashboard = () => {
   const [recentOrders, setRecentOrders] = useState([]);
   const [metrics, setMetrics] = useState({
     totalProducts: 0,
-    avgRating: 0, // Optional: if you have ratings
+    avgRating: 0, 
     recentOrdersCount: 0,
   });
   const [shopInfo, setShopInfo] = useState({ name: "", description: "", imageUrl: "" });
@@ -18,21 +18,21 @@ const SellerDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch seller info
+        
         const shopRes = await fetch(`http://localhost:8095/api/sellers/${sellerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const shopData = await shopRes.json();
         setShopInfo(shopData);
 
-        // Fetch total products
+        
         const productsRes = await fetch(`http://localhost:8093/api/products?sellerId=${sellerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         const productsData = await productsRes.json();
         setMetrics(prev => ({ ...prev, totalProducts: productsData.length }));
 
-        // Fetch recent orders
+        
         const ordersRes = await fetch(`http://localhost:8094/api/orders/seller/${sellerId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });

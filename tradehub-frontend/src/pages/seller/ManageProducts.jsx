@@ -6,7 +6,7 @@ const ManageProducts = () => {
   const [products, setProducts] = useState([]);
   const [editProduct, setEditProduct] = useState(null);
   const token = localStorage.getItem("token");
-  const sellerId = localStorage.getItem("sellerId"); // store sellerId at login
+  const sellerId = localStorage.getItem("sellerId"); 
 
   const fetchProducts = async () => {
     try {
@@ -125,7 +125,7 @@ const ManageProducts = () => {
           </table>
         </div>
 
-        {/* Edit Modal */}
+        
         {editProduct && (
           <div className="modal-overlay">
             <div className="modal">

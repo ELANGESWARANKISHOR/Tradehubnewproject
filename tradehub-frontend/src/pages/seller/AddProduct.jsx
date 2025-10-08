@@ -3,7 +3,7 @@ import Sidebar from "./Sidebar";
 import "./styles.css";
 
 const AddProduct = () => {
-  const sellerId = localStorage.getItem("sellerId"); // Get sellerId from login
+  const sellerId = localStorage.getItem("sellerId"); 
   const token = localStorage.getItem("token");
 
   const [product, setProduct] = useState({

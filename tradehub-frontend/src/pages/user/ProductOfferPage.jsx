@@ -10,7 +10,7 @@ const ProductOfferPage = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
-  // 🧭 Fetch cart items
+  
   useEffect(() => {
     if (!userId || !token) {
       alert("You must be logged in to view your cart.");
@@ -27,7 +27,7 @@ const ProductOfferPage = () => {
         const data = await res.json();
         setCartItems(data);
 
-        // Fetch product details for each productId
+        
         const productResponses = await Promise.all(
           data.map((item) =>
             fetch(`http://localhost:8093/api/products/${item.productId}`)
@@ -52,7 +52,7 @@ const ProductOfferPage = () => {
     fetchCart();
   }, [userId, token]);
 
-  // ❌ Remove product from cart
+  
   const handleRemove = async (productId) => {
     try {
       const res = await fetch(
@@ -72,7 +72,7 @@ const ProductOfferPage = () => {
     }
   };
 
-  // ✅ Confirm order for one product
+  
   const handleConfirmOrder = async (item) => {
     const product = productDetails[item.productId];
     if (!product) {
@@ -92,7 +92,7 @@ const ProductOfferPage = () => {
         item.quantity,
     };
 
-    const orderRequest = [orderItem]; // backend expects list of items
+    const orderRequest = [orderItem]; 
 
     try {
       const res = await fetch(
@@ -110,7 +110,7 @@ const ProductOfferPage = () => {
       if (!res.ok) throw new Error("Failed to confirm order");
 
       alert(`Order placed for ${product.name}!`);
-      handleRemove(item.productId); // remove from cart after confirming
+      handleRemove(item.productId); 
     } catch (err) {
       console.error(err);
       alert("Error confirming order: " + err.message);

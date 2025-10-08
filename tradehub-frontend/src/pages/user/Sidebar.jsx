@@ -9,7 +9,7 @@ const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h1 className="sidebar-title">Hi John!</h1>
+        <h1 className="sidebar-title">Welcome!</h1>
         <nav className="sidebar-nav">
           <Link to="/user-dashboard" className={`nav-item ${activePage === '/' ? 'active' : ''}`}>
             <svg xmlns="http://www.w3.org/2000/svg" className="nav-icon" fill="currentColor" viewBox="0 0 256 256">

@@ -42,7 +42,7 @@ const BrowserPage = () => {
 
     const cartItem = {
       productId: selectedProduct.id,
-      sellerId: selectedProduct.sellerId, // required by backend
+      sellerId: selectedProduct.sellerId, 
       quantity,
       price: selectedProduct.price,
     };
@@ -124,7 +124,7 @@ const BrowserPage = () => {
                 className="product-card"
                 onClick={() => {
                   setSelectedProduct(product);
-                  setQuantity(1); // reset quantity
+                  setQuantity(1); 
                 }}
               >
                 <div
@@ -137,7 +137,7 @@ const BrowserPage = () => {
           )}
         </div>
 
-        {/* Product Detail Modal */}
+        
         {selectedProduct && (
           <div className="modal-overlay">
             <div className="modal product-detail-modal">

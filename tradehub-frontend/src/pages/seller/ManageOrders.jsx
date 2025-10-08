@@ -3,12 +3,12 @@ import Sidebar from "./Sidebar";
 import "./styles.css";
 
 const SellerOrders = () => {
-  const sellerId = localStorage.getItem("sellerId"); // Logged-in seller ID
+  const sellerId = localStorage.getItem("sellerId"); 
   const token = localStorage.getItem("token");
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch orders for this seller
+  
   const fetchOrders = async () => {
     if (!sellerId || !token) {
       alert("You must be logged in as a seller.");
@@ -44,7 +44,7 @@ const SellerOrders = () => {
     fetchOrders();
   }, []);
 
-  // Confirm order
+  
   const handleConfirm = async (orderId) => {
     if (!token) return;
 
@@ -65,7 +65,7 @@ const SellerOrders = () => {
       }
 
       alert("Order confirmed!");
-      fetchOrders(); // Refresh orders
+      fetchOrders(); 
     } catch (err) {
       console.error("Error confirming order:", err);
       alert("Error confirming order: " + err.message);

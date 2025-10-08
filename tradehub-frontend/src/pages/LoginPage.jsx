@@ -33,16 +33,16 @@ const LoginPage = () => {
       const data = await response.json();
       console.log("Login successful:", data);
 
-      // Save JWT token
+      
       localStorage.setItem("token", data.token);
 
-      // Save userId for buyer (needed for cart)
+      
       if (role === "buyer") {
         localStorage.setItem("token", data.token);
-        localStorage.setItem("userId", data.userId); // make sure backend sends userId
+        localStorage.setItem("userId", data.userId); 
         navigate("/user-dashboard");
       } else {
-        // Seller login: decode token to get sellerId
+        
         const base64Payload = data.token.split('.')[1];
         const payload = JSON.parse(atob(base64Payload));
         if (payload.sellerId) localStorage.setItem("sellerId", payload.sellerId);

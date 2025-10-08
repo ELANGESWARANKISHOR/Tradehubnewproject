@@ -57,7 +57,7 @@ const SellerRegistration = () => {
       return;
     }
 
-    // Remove confirmPassword from payload
+
     const payload = { ...formData };
     delete payload.confirmPassword;
 
