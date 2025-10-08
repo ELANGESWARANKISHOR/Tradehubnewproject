@@ -4,6 +4,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,10 +21,9 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String shopname;
-    private String email;
-    private String password;
-    private String confirmPassword;
+    @NotBlank private String shopname;
+    @Email private String email;
+    @NotBlank @Size(min = 8) private String password;
     private double latitude;
     private double longitude;
     private String contactNumber;

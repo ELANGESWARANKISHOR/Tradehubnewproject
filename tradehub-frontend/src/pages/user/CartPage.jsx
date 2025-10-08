@@ -1,89 +1,82 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Sidebar from './Sidebar';
 import './styles.css';
 
 const CartPage = () => {
-  const shop1 = {
-    name: "Eco Essentials",
-    products: [
-      { id: 1, name: "Eco-Friendly Water Bottle", price: 150.00, quantity: 200, discount: "5%", total: 30000 }
-    ],
-    subtotal: 30000,
-    delivery: 1000,
-    totalDiscount: 1500
+  const [orders, setOrders] = useState([]);
+  const [sellerDeliveryRates, setSellerDeliveryRates] = useState({}); // example: { sellerId: rate }
+
+  useEffect(() => {
+    // Fetch all confirmed orders for the logged-in user
+    fetch('http://localhost:8093/api/orders?status=CONFIRMED') // Replace with your backend endpoint
+      .then(res => res.json())
+      .then(data => setOrders(data))
+      .catch(err => console.error('Error fetching confirmed orders:', err));
+
+    // Fetch seller delivery rates (optional)
+    fetch('http://localhost:8094/api/sellers/deliveryRates')
+      .then(res => res.json())
+      .then(data => setSellerDeliveryRates(data))
+      .catch(err => console.error('Error fetching delivery rates:', err));
+  }, []);
+
+  const calculateDelivery = (sellerId, distance) => {
+    const rate = sellerDeliveryRates[sellerId] || 0;
+    return rate * distance;
   };
 
-  const shop2 = {
-    name: "Sustainable Living",
-    products: [
-      { id: 2, name: "Reusable Shopping Bag", price: 10.00, quantity: 100, discount: "10%", total: 1000 }
-    ],
-    subtotal: 1000,
-    delivery: 100,
-    totalDiscount: 100
-  };
+  const renderOrder = (order) => {
+    const distance = 10; // example km; can be dynamic from user's location
+    const totalDelivery = order.items.reduce((sum, item) => sum + calculateDelivery(item.sellerId, distance), 0);
+    const subtotal = order.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const totalDiscount = order.items.reduce((sum, item) => sum + (item.discount || 0), 0);
+    const total = subtotal + totalDelivery - totalDiscount;
 
-  const orderSummary = {
-    totalItemsSubtotal: 31000,
-    totalDelivery: 1100,
-    totalDiscount: 1600,
-    tax: 300,
-    total: 30800
-  };
-
-  const renderShopCart = (shop) => (
-    <div className="shop-cart-section" key={shop.name}>
-      <h3 className="shop-name-title">Shop: {shop.name}</h3>
-      <table className="cart-table">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Discount</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {shop.products.map(product => (
-            <tr key={product.id}>
-              <td>{product.name}</td>
-              <td>{product.price.toFixed(2)}</td>
-              <td>{product.quantity}</td>
-              <td>{product.discount}</td>
-              <td>{product.total.toLocaleString()}</td>
+    return (
+      <div className="shop-cart-section" key={order.id}>
+        <h3 className="shop-name-title">Order ID: {order.id}</h3>
+        <table className="cart-table">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Image</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Discount</th>
+              <th>Total</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-      <div className="shop-summary">
-        <p>Subtotal: <span>{shop.subtotal.toLocaleString()}</span></p>
-        <p>Delivery: <span>{shop.delivery.toLocaleString()}</span></p>
-        <p>Total Discount: <span>{shop.totalDiscount.toLocaleString()}</span></p>
+          </thead>
+          <tbody>
+            {order.items.map(item => (
+              <tr key={item.id}>
+                <td>{item.productName}</td>
+                <td>
+                  <img src={item.productImage} alt={item.productName} width={50} />
+                </td>
+                <td>{item.price.toFixed(2)}</td>
+                <td>{item.quantity}</td>
+                <td>{item.discount || 0}</td>
+                <td>{(item.price * item.quantity - (item.discount || 0)).toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="shop-summary">
+          <p>Subtotal: <span>{subtotal.toLocaleString()}</span></p>
+          <p>Delivery: <span>{totalDelivery.toLocaleString()}</span></p>
+          <p>Total Discount: <span>{totalDiscount.toLocaleString()}</span></p>
+          <p>Total: <span>{total.toLocaleString()}</span></p>
+        </div>
       </div>
-      <div className="cart-actions">
-        <button className="btn reject-btn">Reject Order</button>
-        <button className="btn confirm-btn">Confirm Order</button>
-      </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="page-container">
       <Sidebar />
       <main className="main-content cart-page">
-        <h2 className="page-title">My Cart</h2>
-        {renderShopCart(shop1)}
-        {renderShopCart(shop2)}
-        
-        <div className="order-summary-section">
-          <h3 className="section-title">Order Summary</h3>
-          <p>Total Items Subtotal: <span>{orderSummary.totalItemsSubtotal.toLocaleString()}</span></p>
-          <p>Total Delivery: <span>{orderSummary.totalDelivery.toLocaleString()}</span></p>
-          <p>Total Discount: <span>{orderSummary.totalDiscount.toLocaleString()}</span></p>
-          <p>Tax: <span>{orderSummary.tax.toLocaleString()}</span></p>
-          <p>Total: <span>{orderSummary.total.toLocaleString()}</span></p>
-        </div>
+        <h2 className="page-title">My Confirmed Orders</h2>
+        {orders.length === 0 ? <p>You have no confirmed orders.</p> : orders.map(renderOrder)}
       </main>
     </div>
   );

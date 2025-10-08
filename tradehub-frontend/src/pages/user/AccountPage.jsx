@@ -1,55 +1,45 @@
-import React from 'react';
-import Sidebar from './Sidebar';
-import './styles.css';
-import milk from '../../assets/Milk.jpg';
-import Novel from '../../assets/Novel.jpg';
-
-
+import React, { useEffect, useState } from "react";
+import Sidebar from "./Sidebar";
+import "./styles.css";
 
 const AccountPage = () => {
-  const orderHistory = [
-    {
-      id: '123456',
-      deliveredOn: 'June, 20, 2025',
-      image: milk,
-      volume: '40L',
-      total: 4900
-    },
-    {
-      id: '789012',
-      deliveredOn: 'July, 2, 2025',
-      image: Novel,
-      volume: '5 item',
-      total: 7500
-    }
-  ];
+  const [orders, setOrders] = useState([]);
+  const userId = localStorage.getItem("userId");
+
+  useEffect(() => {
+    if (!userId) return;
+
+    fetch(`http://localhost:8094/api/orders?customerId=${userId}`)
+      .then((res) => res.json())
+      .then((data) => setOrders(data))
+      .catch((err) => console.error("Error fetching orders:", err));
+  }, [userId]);
 
   return (
     <div className="page-container">
       <Sidebar />
       <main className="main-content account-page">
         <h2 className="page-title">Order History</h2>
-        <div className="order-controls">
-          <select className="sort-by-select">
-            <option>Sort by Date</option>
-          </select>
-          <select className="filter-by-select">
-            <option>Filter by Product</option>
-          </select>
-        </div>
 
-        <div className="orders-grid">
-          {orderHistory.map(order => (
-            <div key={order.id} className="order-card">
-              <p className="order-delivered-date">Delivered on {order.deliveredOn}</p>
-              <h3 className="order-number">Order #{order.id}</h3>
-              <div className="order-item-image" style={{ backgroundImage: `url(${order.image})` }}></div>
-              <p className="order-item-volume">{order.volume}</p>
-              <p className="order-item-total">Total: {order.total}</p>
-              <button className="view-details-btn">View Details</button>
-            </div>
-          ))}
-        </div>
+        {orders.length === 0 ? (
+          <p>No orders yet.</p>
+        ) : (
+          <div className="orders-grid">
+            {orders.map((order) => (
+              <div key={order.id} className="order-card">
+                <p className="order-date">
+                  Ordered on {new Date(order.orderDate).toLocaleDateString()}
+                </p>
+                <h3 className="order-number">Order #{order.id}</h3>
+                <p>Total Items: {order.totalItemsSubtotal}</p>
+                <p>Total Delivery: {order.totalDelivery}</p>
+                <p>Total Discount: {order.totalDiscount}</p>
+                <p>Total Amount: {order.totalAmount}</p>
+                <p>Status: {order.status}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
     </div>
   );

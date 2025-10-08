@@ -10,51 +10,51 @@ const LoginPage = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-  };
+  const handleRoleChange = (e) => setRole(e.target.value);
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
-  setLoading(true);
+    e.preventDefault();
+    setLoading(true);
 
-  try {
-    
-    const url =
-      role === "buyer"
-        ? "http://localhost:8092/api/users/login"
-        : "http://localhost:8093/api/sellers/login";
+    try {
+      const url =
+        role === "buyer"
+          ? "http://localhost:8092/api/users/login"
+          : "http://localhost:8095/api/sellers/login";
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-    if (!response.ok) {
-      throw new Error("Invalid credentials");
+      if (!response.ok) throw new Error("Invalid credentials");
+
+      const data = await response.json();
+      console.log("Login successful:", data);
+
+      // Save JWT token
+      localStorage.setItem("token", data.token);
+
+      // Save userId for buyer (needed for cart)
+      if (role === "buyer") {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userId", data.userId); // make sure backend sends userId
+        navigate("/user-dashboard");
+      } else {
+        // Seller login: decode token to get sellerId
+        const base64Payload = data.token.split('.')[1];
+        const payload = JSON.parse(atob(base64Payload));
+        if (payload.sellerId) localStorage.setItem("sellerId", payload.sellerId);
+        navigate("/seller-dashboard");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Login failed: " + error.message);
+    } finally {
+      setLoading(false);
     }
-
-    const data = await response.json();
-    console.log("Login successful:", data);
-
-    // Save JWT token in local storage
-    localStorage.setItem("token", data.token);
-
-    // Redirect based on role
-    if (role === "buyer") {
-      navigate("/user-dashboard");
-    } else if (role === "seller") {
-      navigate("/seller-dashboard");
-    }
-  } catch (error) {
-    console.error("Login error:", error);
-    alert("Login failed: " + error.message);
-  } finally {
-    setLoading(false);
-  }
-};
-
+  };
 
   return (
     <div className="login-container">
@@ -72,66 +72,30 @@ const LoginPage = () => {
           <h2 className="login-title">Log in to Trade Hub</h2>
 
           <div className="role-selection">
-            <label
-              className={`role-label ${role === "buyer" ? "selected" : ""}`}
-            >
+            <label className={`role-label ${role === "buyer" ? "selected" : ""}`}>
               Buyer
-              <input
-                type="radio"
-                name="role"
-                value="buyer"
-                checked={role === "buyer"}
-                onChange={handleRoleChange}
-              />
+              <input type="radio" name="role" value="buyer" checked={role === "buyer"} onChange={handleRoleChange} />
             </label>
-            <label
-              className={`role-label ${role === "seller" ? "selected" : ""}`}
-            >
+            <label className={`role-label ${role === "seller" ? "selected" : ""}`}>
               Seller
-              <input
-                type="radio"
-                name="role"
-                value="seller"
-                checked={role === "seller"}
-                onChange={handleRoleChange}
-              />
+              <input type="radio" name="role" value="seller" checked={role === "seller"} onChange={handleRoleChange} />
             </label>
           </div>
 
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label className="form-label">Email</label>
-              <input
-                className="form-input"
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
+              <input className="form-input" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
             </div>
 
             <div className="form-group">
               <label className="form-label">Password</label>
-              <input
-                className="form-input"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
+              <input className="form-input" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
             </div>
 
-            <Link to="/forgot-password" className="forgot-password">
-              Forgot password?
-            </Link>
+            <Link to="/forgot-password" className="forgot-password">Forgot password?</Link>
 
-            <button
-              type="submit"
-              className="login-button"
-              disabled={loading}
-            >
+            <button type="submit" className="login-button" disabled={loading}>
               {loading ? "Logging in..." : "Log In"}
             </button>
           </form>

@@ -5,7 +5,6 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import './SellerRegistration.css';
 
-
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl:
@@ -15,7 +14,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl:
     'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
 });
-
 
 const LocationMarker = ({ setFormData }) => {
   const [position, setPosition] = useState(null);
@@ -52,38 +50,40 @@ const SellerRegistration = () => {
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  
-  if (formData.password !== formData.confirmPassword) {
-    alert("Passwords do not match!");
-    return;
-  }
-
-  try {
-    const response = await fetch("http://localhost:8093/api/sellers/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(formData),
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Seller registered successfully:", data);
-      alert("Registration successful!");
-
-    } else {
-      const error = await response.text();
-      console.error("Registration failed:", error);
-      alert("Registration failed!");
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match!");
+      return;
     }
-  } catch (err) {
-    console.error("Error connecting to backend:", err);
-    alert("Error connecting to backend!");
-  }
-};
+
+    // Remove confirmPassword from payload
+    const payload = { ...formData };
+    delete payload.confirmPassword;
+
+    try {
+      const response = await fetch("http://localhost:8095/api/sellers/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Seller registered successfully:", data);
+        alert("Registration successful!");
+      } else {
+        const error = await response.text();
+        console.error("Registration failed:", error);
+        alert("Registration failed!");
+      }
+    } catch (err) {
+      console.error("Error connecting to backend:", err);
+      alert("Error connecting to backend!");
+    }
+  };
 
   return (
     <div className="registration-container">
@@ -145,7 +145,6 @@ const SellerRegistration = () => {
               />
             </div>
 
-            
             <div className="form-group">
               <label>Select your shop location:</label>
               <MapContainer

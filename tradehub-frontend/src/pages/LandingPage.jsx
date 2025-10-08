@@ -94,11 +94,11 @@ const LandingPage = () => {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">Connect with a global network of businesses</h1>
-          <div className="hero-buttons">
-            <Link to="/signup-buyer" className="join-btn">Join as Buyer</Link>
-            <Link to="/signup-seller" className="join-btn">Join as Seller</Link>
-          </div>
+        <div className="hero-buttons">
+          <Link to="/signup-buyer" className="join-btn">Join as Buyer</Link>
+          <Link to="/signup-seller" className="join-btn">Join as Seller</Link>
         </div>
+      </div>
       </section>
 
      

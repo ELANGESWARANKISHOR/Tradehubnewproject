@@ -1,40 +1,101 @@
-import React from 'react';
-import Sidebar from './Sidebar';
-import './styles.css';
+import React, { useState } from "react";
+import Sidebar from "./Sidebar";
+import "./styles.css";
 
 const AddProduct = () => {
+  const sellerId = localStorage.getItem("sellerId"); // Get sellerId from login
+  const token = localStorage.getItem("token");
+
+  const [product, setProduct] = useState({
+    name: "",
+    description: "",
+    category: "",
+    stock: 0,
+    price: 0,
+    discount: 0,
+    imageUrl: ""
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProduct((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!sellerId || !token) {
+      alert("You must be logged in as a seller.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:8093/api/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token
+        },
+        body: JSON.stringify({ ...product, sellerId: parseInt(sellerId) })
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Failed to add product");
+      }
+
+      const data = await response.json();
+      alert("Product added successfully!");
+      console.log("Added Product:", data);
+
+      // Reset form
+      setProduct({
+        name: "",
+        description: "",
+        category: "",
+        stock: 0,
+        price: 0,
+        discount: 0,
+        imageUrl: ""
+      });
+    } catch (err) {
+      console.error("Error adding product:", err);
+      alert("Error adding product: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="page-container">
       <Sidebar />
       <main className="main-content">
-        <h2 className="page-title">Add Product</h2>
-        <div className="add-product-form">
-          <div className="form-group">
-            <label htmlFor="productName">Product Name</label>
-            <input type="text" id="productName" placeholder="Enter Product Name" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="description">Description</label>
-            <textarea id="description" placeholder="Description"></textarea>
-          </div>
-          <div className="form-group">
-            <label htmlFor="category">Category</label>
-            <input type="text" id="category" placeholder="Category" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="quantity">Quantity</label>
-            <input type="number" id="quantity" placeholder="Enter quantity" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="price">Price</label>
-            <input type="number" id="price" placeholder="Enter price" />
-          </div>
-          <div className="form-group">
-            <label htmlFor="discount">Discount</label>
-            <input type="number" id="discount" placeholder="Enter discount" />
-          </div>
-          <button className="add-product-btn">Add Product</button>
-        </div>
+        <h2 className="page-title">Add New Product</h2>
+        <form className="update-form" onSubmit={handleSubmit}>
+          {Object.keys(product).map((key) => (
+            <div className="form-group" key={key}>
+              <label>{key.charAt(0).toUpperCase() + key.slice(1)}</label>
+              <input
+                type={
+                  key === "price" || key === "stock" || key === "discount"
+                    ? "number"
+                    : "text"
+                }
+                name={key}
+                value={product[key]}
+                onChange={handleChange}
+                className="form-input"
+                required
+              />
+            </div>
+          ))}
+
+          <button type="submit" className="update-button" disabled={loading}>
+            {loading ? "Adding..." : "Add Product"}
+          </button>
+        </form>
       </main>
     </div>
   );

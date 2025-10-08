@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SellerLoginResponse {
-
+    private Long id;
+    private String shopname;
     private String email;
     private String token;
-
 }
