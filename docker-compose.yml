@@ -1,76 +1,125 @@
 services:
-  mysql:
-    image: mysql:8
+  # ---------- MySQL Database ----------
+  mysql-db:
+    image: mysql:8.0
     container_name: tradehub-mysql
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: tradehub
-      MYSQL_USER: tradehubuser
-      MYSQL_PASSWORD: tradehubpass
+      MYSQL_ROOT_PASSWORD: root
+      # We'll create all DBs automatically when containers connect
+      MYSQL_DATABASE: tradehub_user
     ports:
       - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - tradehub-network
 
+  # ---------- User Service ----------
   user-service:
-    build:
-      context: ./tradehub-backend/user-service
+    build: ./tradehub-backend/user-service
     container_name: user-service
+    restart: always
     ports:
       - "8092:8092"
+    environment:
+      SPRING_APPLICATION_NAME: user-service
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tradehub_user
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+      JWT_SECRET: 3xP@m#8h2N$7vZ!4rL6dQw9kB1yE2uF0
+      JWT_EXPIRATION: 60
     depends_on:
-      - mysql
+      - mysql-db
     networks:
       - tradehub-network
 
-  product-service:
-    build:
-      context: ./tradehub-backend/product-service
-    container_name: product-service
-    ports:
-      - "8093:8093"
-    depends_on:
-      - mysql
-    networks:
-      - tradehub-network
-
-  order-service:
-    build:
-      context: ./tradehub-backend/order-service
-    container_name: order-service
-    ports:
-      - "8094:8094"
-    depends_on:
-      - mysql
-    networks:
-      - tradehub-network
-
+  # ---------- Seller Service ----------
   seller-service:
-    build:
-      context: ./tradehub-backend/seller-service
+    build: ./tradehub-backend/seller-service
     container_name: seller-service
+    restart: always
     ports:
       - "8095:8095"
+    environment:
+      SPRING_APPLICATION_NAME: seller-service
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tradehub_seller
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
     depends_on:
-      - mysql
+      - mysql-db
     networks:
       - tradehub-network
 
+  # ---------- Product Service ----------
+  product-service:
+    build: ./tradehub-backend/product-service
+    container_name: product-service
+    restart: always
+    ports:
+      - "8093:8093"
+    environment:
+      SPRING_APPLICATION_NAME: product-service
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tradehub_product
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+    depends_on:
+      - mysql-db
+    networks:
+      - tradehub-network
+
+  # ---------- Order Service ----------
+  order-service:
+    build: ./tradehub-backend/order-service
+    container_name: order-service
+    restart: always
+    ports:
+      - "8094:8094"
+    environment:
+      SPRING_APPLICATION_NAME: order-service
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/tradehub_order
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+    depends_on:
+      - mysql-db
+      - product-service
+      - seller-service
+      - user-service
+    networks:
+      - tradehub-network
+
+  # ---------- Frontend ----------
   frontend:
-    build:
-      context: ./tradehub-frontend
-      dockerfile: Dockerfile
+    build: ./tradehub-frontend
     container_name: tradehub-frontend
+    restart: always
     ports:
       - "5173:5173"
-    networks:
-      - tradehub-network
     depends_on:
       - user-service
+      - seller-service
       - product-service
       - order-service
-      - seller-service
+    networks:
+      - tradehub-network
 
+# ---------- Volumes ----------
+volumes:
+  mysql-data:
+
+# ---------- Network ----------
 networks:
   tradehub-network:
     driver: bridge

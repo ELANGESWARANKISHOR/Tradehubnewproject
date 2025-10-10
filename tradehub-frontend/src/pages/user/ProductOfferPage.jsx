@@ -10,49 +10,49 @@ const ProductOfferPage = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
 
-  
+  // Fetch cart and corresponding product details
   useEffect(() => {
     if (!userId || !token) {
       alert("You must be logged in to view your cart.");
       return;
     }
 
-    const fetchCart = async () => {
+    const fetchCartData = async () => {
       try {
-        const res = await fetch(`http://localhost:8092/api/users/${userId}/cart`, {
+        const cartRes = await fetch(`http://localhost:8092/api/users/${userId}/cart`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        if (!res.ok) throw new Error("Failed to fetch cart");
 
-        const data = await res.json();
-        setCartItems(data);
+        if (!cartRes.ok) throw new Error("Failed to fetch cart data");
+        const cartData = await cartRes.json();
+        setCartItems(cartData);
 
-        
         const productResponses = await Promise.all(
-          data.map((item) =>
+          cartData.map(item =>
             fetch(`http://localhost:8093/api/products/${item.productId}`)
-              .then((res) => res.json())
+              .then(res => res.json())
               .catch(() => null)
           )
         );
 
         const productMap = {};
-        productResponses.forEach((prod, i) => {
-          if (prod) productMap[data[i].productId] = prod;
+        productResponses.forEach((prod, index) => {
+          if (prod) productMap[cartData[index].productId] = prod;
         });
 
         setProductDetails(productMap);
       } catch (err) {
-        console.error("Error fetching cart:", err);
+        console.error(err);
+        alert("Error fetching cart or product details: " + err.message);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchCart();
+    fetchCartData();
   }, [userId, token]);
 
-  
+  // Remove item from cart
   const handleRemove = async (productId) => {
     try {
       const res = await fetch(
@@ -62,9 +62,10 @@ const ProductOfferPage = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      if (!res.ok) throw new Error("Failed to remove item");
 
-      setCartItems(cartItems.filter((item) => item.productId !== productId));
+      if (!res.ok) throw new Error("Failed to remove item from cart");
+
+      setCartItems(cartItems.filter(item => item.productId !== productId));
       alert("Item removed from cart.");
     } catch (err) {
       console.error(err);
@@ -72,13 +73,16 @@ const ProductOfferPage = () => {
     }
   };
 
-  
-  const handleConfirmOrder = async (item) => {
+  // Place order for a single cart item (status will be PENDING)
+  const handlePlaceOrder = async (item) => {
     const product = productDetails[item.productId];
     if (!product) {
       alert("Product details not found.");
       return;
     }
+
+    const discountValue = product.price * (product.discount || 0) / 100;
+    const totalPrice = (product.price - discountValue + (product.deliveryCharge || 0)) * item.quantity;
 
     const orderItem = {
       sellerId: product.sellerId,
@@ -87,12 +91,8 @@ const ProductOfferPage = () => {
       quantity: item.quantity,
       price: product.price,
       discount: product.discount || 0,
-      total:
-        (product.price - (product.price * (product.discount || 0)) / 100) *
-        item.quantity,
+      total: totalPrice
     };
-
-    const orderRequest = [orderItem]; 
 
     try {
       const res = await fetch(
@@ -103,17 +103,21 @@ const ProductOfferPage = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(orderRequest),
+          body: JSON.stringify([orderItem]),
         }
       );
 
-      if (!res.ok) throw new Error("Failed to confirm order");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.message || "Failed to place order");
+      }
 
-      alert(`Order placed for ${product.name}!`);
-      handleRemove(item.productId); 
+      await res.json();
+      alert("Order placed successfully! Status: PENDING. Seller will confirm soon.");
+      handleRemove(item.productId); // remove from cart
     } catch (err) {
       console.error(err);
-      alert("Error confirming order: " + err.message);
+      alert("Error placing order: " + err.message);
     }
   };
 
@@ -133,11 +137,8 @@ const ProductOfferPage = () => {
               const product = productDetails[item.productId];
               if (!product) return null;
 
-              const discountValue = (product.price * (product.discount || 0)) / 100;
-              const totalPrice =
-                ((product.price - discountValue) +
-                  (product.deliveryCharge || 0)) *
-                item.quantity;
+              const discountValue = product.price * (product.discount || 0) / 100;
+              const totalPrice = (product.price - discountValue + (product.deliveryCharge || 0)) * item.quantity;
 
               return (
                 <div key={item.productId} className="cart-item-card">
@@ -148,7 +149,7 @@ const ProductOfferPage = () => {
 
                   <div className="cart-item-details">
                     <h3>{product.name}</h3>
-                    <p>Shop: <b>{product.shopName}</b></p>
+                    <p>Shop: <b>{product.shopName || "N/A"}</b></p>
                     <p>Quantity: {item.quantity}</p>
                     <p>Price per Unit: Rs. {product.price}</p>
                     <p>Discount: {product.discount || 0}%</p>
@@ -156,16 +157,10 @@ const ProductOfferPage = () => {
                     <h4>Total: Rs. {totalPrice.toFixed(2)}</h4>
 
                     <div className="cart-buttons">
-                      <button
-                        className="confirm-btn"
-                        onClick={() => handleConfirmOrder(item)}
-                      >
-                        Confirm Order
+                      <button className="confirm-btn" onClick={() => handlePlaceOrder(item)}>
+                        Place Order
                       </button>
-                      <button
-                        className="remove-btn"
-                        onClick={() => handleRemove(item.productId)}
-                      >
+                      <button className="remove-btn" onClick={() => handleRemove(item.productId)}>
                         Remove
                       </button>
                     </div>
@@ -181,5 +176,3 @@ const ProductOfferPage = () => {
 };
 
 export default ProductOfferPage;
-
-
