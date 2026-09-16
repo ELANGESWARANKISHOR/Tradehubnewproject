@@ -161,7 +161,3 @@ A `Jenkinsfile` is included that:
 - Authentication is JWT-based, issued by `user-service` and `seller-service`.
 - JWT secrets and default DB credentials in `application.properties`/`docker-compose.yml` are development defaults only — **replace them with secrets injected via environment variables before deploying anywhere beyond local development.**
 - `spring.jpa.hibernate.ddl-auto=update` is used for convenience in development; use a proper migration tool (e.g. Flyway/Liquibase) and a safer DDL strategy in production.
-
-## License
-
-No license file is included in this repository. Add one if you intend to distribute or open-source this project.
